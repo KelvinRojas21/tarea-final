@@ -1,0 +1,20 @@
+create database costos;
+use costos;
+create table unidades (unidad varchar(10), descripcion varchar(50) not null, primary key (unidad)) engine=innodb;
+create table tipos (tipo int(2), descripcion varchar(50) not null, primary key(tipo)) engine=innodb;
+create table insumos (codigo int (10), descripcion varchar(150) not null, tipo int(2) not null, unidad varchar(10) not null, precioUnitario decimal(10,2) not null, primary key (codigo), index (tipo), foreign key(tipo) references tipos (tipo), index (unidad), foreign key(unidad) references unidades(unidad)) engine=innodb;
+create table hojas (codigoHoja int(10), descripcion varchar(250) not null, unidad varchar(10) not null, primary key (codigoHoja), index(unidad), foreign key(unidad) references unidades(unidad)) engine = innodb;
+create table insumosPorHoja (codigoHoja int(10), codigo int(10), cantidad decimal(6,2) not null, primary key (codigoHoja,codigo), index(codigo), foreign key (codigo) references insumos(codigo), index(codigoHoja), foreign key(codigoHoja) references hojas(codigoHoja)) engine=innodb;
+INSERT INTO unidades(unidad,descripcion) VALUES ('JDR','JORNADA DIARIA REGULAR');
+INSERT INTO unidades(unidad,descripcion) VALUES ('AR','ARROBA');
+INSERT INTO tipos(tipo,descripcion) VALUES (1,'MATERIAL');
+INSERT INTO tipos(tipo,descripcion) VALUES (2,'MANO DE OBRA');
+INSERT INTO tipos(tipo,descripcion) VALUES (3,'EQUIPO');
+INSERT INTO tipos(tipo,descripcion) VALUES (4,'HERRAMIENTAS');
+INSERT INTO insumos(codigo,descripcion,tipo,unidad,precioUnitario) VALUES (1,'CEMENTO',1,'AR',6.99);
+INSERT INTO insumos(codigo,descripcion,tipo,unidad,precioUnitario) VALUES (2,'ALBAÑIL',2,'JDR',6.99);
+INSERT INTO unidades(unidad,descripcion) VALUES ('U','UNIDAD');
+
+INSERT INTO insumos(codigo,descripcion,tipo,unidad,precioUnitario) VALUES (3,'CASCO',3,'U',7.99);
+INSERT INTO insumos(codigo,descripcion,tipo,unidad,precioUnitario) VALUES (4,'PALA',4,'JDR',8.99);
+
